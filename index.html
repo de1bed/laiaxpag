@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03050A">
+<title>LAIAX — Latin American Institute for AI & eXponential Organizations</title>
+<meta name="description" content="LAIAX. Plataforma de aceleración empresarial para la era exponencial. Primer producto: MADE — Maestría en Alta Dirección. 17 ciudades. 17 meses. Cohorte 01 abierta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============== BRAND TOKENS (matched to brand.jsx) ============== */
+:root{
+  /* Neutros / territorio */
+  --ink:#0A0A0B;
+  --ink-2:#131316;
+  --ink-3:#1C1C20;
+  --paper:#F5F4F0;
+  --paper-2:#FFFFFF;
+  --paper-warm:#EDEBE3;
+  --line-dark:#2A2A2E;
+  --line-paper:#D4D2CC;
+  --mute:#7A7A82;
+  --mute-2:#A8A8AE;
+  --ink-soft:#3A3A40;
+  --ink-soft-2:#5A5A60;
+
+  /* Acentos del sistema */
+  --green:#00D27A;
+  --green-glow:#3DFFA8;
+  --green-rgb:0,210,122;
+  --amber:#FF5B2E;
+  --amber-glow:#FF8A66;
+  --amber-rgb:255,91,46;
+  --lime:#C6FF3D;
+  --lime-rgb:198,255,61;
+
+  /* Acento por defecto (verde — LAIAX) */
+  --accent:var(--green);
+  --accent-glow:var(--green-glow);
+  --accent-rgb:var(--green-rgb);
+  --accent-soft:rgba(0,210,122,.18);
+
+  /* Layout & type */
+  --gutter:clamp(20px,4vw,72px);
+  --display:'Saira','Inter Tight',system-ui,sans-serif;
+  --body:'Inter Tight',system-ui,sans-serif;
+  --label:'Inter Tight',system-ui,sans-serif;
+  --fw-light:200;
+  --fw-regular:300;
+  --fw-medium:500;
+
+  /* Page-scoped surface (default dark) */
+  --bg:var(--ink);
+  --fg:var(--paper);
+}
+
+/* MADE = acento ámbar (señal · sub-marca cálida) */
+.page[data-page="made"]{
+  --accent:var(--amber);
+  --accent-glow:var(--amber-glow);
+  --accent-rgb:var(--amber-rgb);
+  --accent-soft:rgba(255,91,46,.20);
+}
+/* APLICAR mantiene verde porque el CTA es de LAIAX */
+*{box-sizing:border-box}
+*::selection{background:var(--accent);color:var(--ink)}
+html,body{margin:0;background:var(--ink);color:var(--paper);scroll-behavior:auto}
+body{
+  font-family:var(--body);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-weight:400;
+  font-feature-settings:"ss01","cv11";
+}
+h1,h2,h3,h4,h5{font-family:var(--display);font-weight:var(--fw-light);margin:0;letter-spacing:-0.02em}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+button{cursor:pointer;font:inherit;color:inherit;background:none;border:0;padding:0}
+
+.wrap{max-width:1320px;margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.eyebrow strong{color:var(--paper);font-weight:500}
+
+/* ============== NAV ============== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px var(--gutter);
+  font-family:var(--label);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  /* Fade transparente por defecto (oscuro). El gradiente baja del ink al transparente. */
+  background:transparent;
+  border-bottom:0;
+  --nav-fg:var(--paper);
+  --nav-fg-muted:var(--mute-2);
+  --nav-divider:var(--line-dark);
+  color:var(--nav-fg);
+  transition:color .35s ease;
+}
+/* Capa de fade detrás del nav (sin azul, neutral). */
+.nav::before{
+  content:"";position:absolute;inset:0 0 -40px 0;z-index:-1;
+  background:linear-gradient(180deg, rgba(10,10,11,.92) 0%, rgba(10,10,11,.6) 55%, rgba(10,10,11,0) 100%);
+  pointer-events:none;
+  transition:opacity .35s ease;
+}
+/* Variante para páginas con fondo claro */
+body[data-surface="paper"] .nav{
+  --nav-fg:var(--ink);
+  --nav-fg-muted:var(--ink-soft);
+  --nav-divider:var(--line-paper);
+}
+body[data-surface="paper"] .nav::before{
+  background:linear-gradient(180deg, rgba(245,244,240,.92) 0%, rgba(245,244,240,.6) 55%, rgba(245,244,240,0) 100%);
+}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:500;color:var(--nav-fg)}
+.nav__mark{width:22px;height:14px}
+.nav__links{display:flex;align-items:center;gap:clamp(12px,2.4vw,32px)}
+.nav__link{
+  position:relative;color:var(--nav-fg-muted);transition:color .25s ease;
+  padding:6px 0;
+}
+.nav__link:hover{color:var(--nav-fg)}
+.nav__link.is-active{color:var(--nav-fg)}
+.nav__link.is-active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+}
+.nav__right{display:flex;align-items:center;gap:18px}
+.lang{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--nav-fg-muted)}
+.lang button{padding:4px 6px;color:var(--nav-fg-muted);transition:color .2s}
+.lang button.is-active{color:var(--nav-fg)}
+.lang span{color:var(--nav-divider)}
+.nav__cta{
+  border:1px solid var(--nav-divider);padding:10px 18px;border-radius:999px;
+  color:var(--nav-fg);font-weight:500;letter-spacing:.16em;
+  transition:background .25s ease,border-color .25s ease,color .25s ease;
+}
+.nav__cta:hover{background:var(--nav-fg);color:var(--ink);border-color:var(--nav-fg)}
+body[data-surface="paper"] .nav__cta:hover{color:var(--paper)}
+@media(max-width:840px){
+  .nav__links{display:none}
+  .nav{padding:14px var(--gutter)}
+}
+
+/* ============== PAGE ROUTING ============== */
+.app{min-height:100vh;display:flex;flex-direction:column;background:var(--ink);transition:background .4s ease}
+body[data-surface="paper"] .app{background:var(--paper)}
+.page{display:none;animation:pageIn .5s cubic-bezier(.2,.8,.2,1)}
+.page.is-active{display:block}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .page{animation:none}
+}
+
+/* ============== BUTTONS ============== */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--label);font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  padding:14px 22px;border-radius:999px;
+  transition:transform .25s ease,background .25s ease,color .25s ease,border-color .25s ease,box-shadow .25s ease;
+  cursor:pointer;border:1px solid transparent;
+}
+.btn--primary{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn--primary:hover{background:var(--accent);border-color:var(--accent);color:var(--ink);box-shadow:0 8px 32px rgba(var(--accent-rgb),.3)}
+.btn--ghost{border-color:var(--line-dark);color:var(--paper)}
+.btn--ghost:hover{border-color:var(--paper);background:rgba(255,255,255,.05)}
+.btn:hover .arrow{transform:translateX(3px)}
+.btn .arrow{transition:transform .25s ease;display:inline-block}
+
+/* ============== HERO (shared) ============== */
+.hero{
+  position:relative;min-height:88vh;
+  padding:108px var(--gutter) 36px;
+  display:flex;flex-direction:column;gap:clamp(16px,2vw,28px);
+  overflow:hidden;isolation:isolate;
+  color:var(--paper);
+  background:var(--ink);
+}
+.hero--tall{min-height:92vh}
+.hero--paper{background:var(--paper);color:var(--ink)}
+.hero--paper .eyebrow{color:var(--ink-soft)}
+.hero--paper .eyebrow strong{color:var(--ink)}
+.hero--paper .hero__title{color:var(--ink)}
+.hero--paper .hero__title .soft{color:var(--mute)}
+.hero--paper .hero__lead{color:var(--ink-soft)}
+.hero--paper .hero__meta{color:var(--ink-soft)}
+.hero--paper .hero__meta strong{color:var(--ink)}
+.hero--paper .hero__foot{border-top-color:var(--line-paper);color:var(--ink-soft)}
+.hero--paper .hero__foot strong{color:var(--ink)}
+.hero__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:radial-gradient(ellipse 140% 100% at 50% 100%, #0f1812 0%, #0A0A0B 60%, #060607 100%)}
+.hero--paper .hero__bg{background:radial-gradient(ellipse 140% 100% at 50% 100%, #FFFFFF 0%, var(--paper) 70%, var(--paper-warm) 100%)}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transition:opacity .6s ease}
+.hero__video.is-hidden{opacity:0}
+.hero__mesh{
+  position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;opacity:.85;
+  background:
+    radial-gradient(ellipse 130% 90% at 15% -10%, rgba(var(--accent-rgb),.4), transparent 52%),
+    radial-gradient(ellipse 80% 70% at 95% 75%, rgba(255,255,255,.06), transparent 48%),
+    radial-gradient(circle at 40% 40%, transparent 42%, rgba(10,10,11,.85) 100%);
+}
+.hero--paper .hero__mesh{
+  mix-blend-mode:multiply;opacity:.5;
+  background:
+    radial-gradient(ellipse 100% 80% at 0% 0%, rgba(var(--accent-rgb),.22), transparent 55%),
+    radial-gradient(ellipse 60% 60% at 100% 100%, rgba(0,0,0,.04), transparent 60%);
+}
+.hero__grid{
+  position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.18;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size:88px 88px;
+  mask-image:radial-gradient(ellipse at center, black 38%, transparent 86%);
+}
+.hero--paper .hero__grid{
+  opacity:.4;
+  background-image:
+    linear-gradient(to right, rgba(10,10,11,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10,10,11,.05) 1px, transparent 1px);
+}
+.hero__top{position:relative;z-index:12;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.hero__main{position:relative;z-index:12;flex:1;display:grid;gap:clamp(24px,4vw,80px)}
+.hero__main--split{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:stretch}
+.hero__main--center{grid-template-columns:1fr;align-items:center;text-align:center;justify-items:center}
+.hero__col{display:flex;flex-direction:column;min-width:0}
+.hero__col--l{align-items:flex-start;text-align:left;gap:clamp(16px,2vw,28px);padding-top:clamp(8px,2vw,28px)}
+.hero__col--r{align-items:flex-end;text-align:right;justify-content:flex-end;gap:clamp(20px,2.4vw,32px)}
+
+.hero__title{
+  font-family:var(--display);font-weight:var(--fw-light);
+  text-transform:uppercase;letter-spacing:.06em;line-height:1;
+  margin:0;color:var(--paper);text-wrap:balance;
+}
+.hero__title--xl{font-size:clamp(48px,8.6vw,148px);max-width:14ch}
+.hero__title--lg{font-size:clamp(44px,7.6vw,128px);max-width:14ch;margin-top:auto}
+.hero__title--md{font-size:clamp(40px,6.6vw,112px);letter-spacing:.05em}
+.hero__title .accent-glow{color:var(--accent-glow);text-shadow:0 0 18px rgba(var(--accent-rgb),.55),0 0 56px rgba(var(--accent-rgb),.3)}
+.hero__title .soft{color:var(--mute-2);font-weight:var(--fw-light)}
+
+.hero__divider{display:block;width:60px;height:1px;background:var(--accent);box-shadow:0 0 14px rgba(var(--accent-rgb),.55)}
+.hero__meta{
+  list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;
+  font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)
+}
+.hero__meta li{display:flex;align-items:baseline;gap:14px}
+.hero__meta strong{color:var(--paper);font-weight:500;font-variant-numeric:tabular-nums}
+.hero__lead{
+  font-family:var(--body);font-size:clamp(15px,1.15vw,17px);
+  line-height:1.55;color:#C8C8CC;max-width:46ch;margin:0;text-wrap:pretty;margin-top:auto;
+}
+.hero__cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+
+.hero__foot{
+  position:relative;z-index:12;display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(16px,3vw,48px);flex-wrap:wrap;
+  border-top:1px solid var(--line-dark);padding-top:18px;
+  font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+}
+.hero__foot strong{color:var(--paper);font-weight:500;font-variant-numeric:tabular-nums}
+
+@media(max-width:900px){
+  .hero__main--split{grid-template-columns:1fr}
+  .hero__col--r{align-items:flex-start;text-align:left;justify-content:flex-start;margin-top:48px;gap:24px}
+  .hero__title--lg{margin-top:0;max-width:none}
+  .hero__title--xl{max-width:none}
+  .hero__cta{justify-content:flex-start}
+}
+
+/* ============== SECTION SHELL ============== */
+.sec{position:relative;padding:clamp(72px,10vw,140px) 0;background:var(--ink);color:var(--paper)}
+.sec--ink{background:var(--ink-2)}
+.sec--paper{background:var(--paper);color:var(--ink)}
+.sec--paper .eyebrow{color:var(--ink-soft-2)}
+.sec--paper .eyebrow strong{color:var(--ink)}
+.sec--paper a{color:inherit}
+.sec__head{
+  display:grid;grid-template-columns:200px 1fr;gap:clamp(24px,4vw,56px);
+  margin-bottom:clamp(40px,6vw,72px);align-items:start;
+}
+.sec__num{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.sec--paper .sec__num{color:var(--ink-soft-2)}
+.sec__title{
+  font-family:var(--display);font-weight:var(--fw-light);
+  font-size:clamp(30px,4.6vw,64px);letter-spacing:-0.02em;line-height:1.05;
+  text-wrap:balance;color:inherit;
+}
+.sec__title em{font-style:normal;color:var(--accent)}
+.sec__title .accent-glow{color:var(--accent-glow);text-shadow:0 0 14px rgba(var(--accent-rgb),.45)}
+.sec--paper .sec__title .accent-glow{color:var(--accent);text-shadow:none}
+.sec__sub{font-family:var(--body);font-size:clamp(16px,1.2vw,18px);line-height:1.55;color:#C8C8CC;max-width:60ch;margin-top:18px}
+.sec--paper .sec__sub{color:var(--ink-soft)}
+@media(max-width:780px){.sec__head{grid-template-columns:1fr}}
+
+/* ============== PAPER COMPONENT OVERRIDES ============== */
+.sec--paper .programs,
+.sec--paper .pillars,
+.sec--paper .dualist,
+.sec--paper .trio,
+.sec--paper .cities,
+.sec--paper .stages,
+.sec--paper .mentors,
+.sec--paper .invest,
+.sec--paper .steps,
+.sec--paper .quotes,
+.sec--paper .trust{background:var(--line-paper);border-color:var(--line-paper)}
+.sec--paper .program,
+.sec--paper .pillar,
+.sec--paper .dualist__col,
+.sec--paper .trio__cell,
+.sec--paper .city,
+.sec--paper .stage,
+.sec--paper .mentor,
+.sec--paper .invest__cell,
+.sec--paper .step,
+.sec--paper .quote,
+.sec--paper .trust__cell{background:var(--paper-2)}
+.sec--paper .program:hover{background:#FAFAF7}
+.sec--paper .program__name,
+.sec--paper .pillar__title,
+.sec--paper .trio__cell .t,
+.sec--paper .city__name,
+.sec--paper .stage__title,
+.sec--paper .mentor__name,
+.sec--paper .step__t,
+.sec--paper .quote__t,
+.sec--paper .trust__v,
+.sec--paper .invest__cell h3,
+.sec--paper .dualist__col h3,
+.sec--paper .program__link{color:var(--ink)}
+.sec--paper .program__desc,
+.sec--paper .pillar__body,
+.sec--paper .city__topic,
+.sec--paper .stage__body,
+.sec--paper .mentor__bio,
+.sec--paper .step__b,
+.sec--paper .invest__row,
+.sec--paper .dualist__col li{color:var(--ink-soft)}
+.sec--paper .dualist__col li::before{color:var(--accent)}
+.sec--paper .dualist__col--neg li::before{color:#D44A55}
+.sec--paper .invest__row strong{color:var(--ink)}
+.sec--paper .program__num,
+.sec--paper .pillar__n,
+.sec--paper .trio__cell .l,
+.sec--paper .mentor__role,
+.sec--paper .city__date,
+.sec--paper .quote__c,
+.sec--paper .trust__l{color:var(--accent)}
+.sec--paper .stage__n,
+.sec--paper .step__n{color:var(--accent)}
+.sec--paper .city__num{color:var(--mute)}
+.sec--paper .invest__big{color:var(--accent);text-shadow:0 0 18px rgba(var(--accent-rgb),.25)}
+.sec--paper .invest__cap{color:var(--mute)}
+.sec--paper .invest__rows{border-top-color:var(--line-paper)}
+.sec--paper .faq{border-top-color:var(--line-paper);border-bottom-color:var(--line-paper)}
+.sec--paper .faq__item{border-bottom-color:var(--line-paper)}
+.sec--paper .faq__q{color:var(--ink)}
+.sec--paper .faq__a{color:var(--ink-soft)}
+.sec--paper .quote__t .hl{color:var(--accent);text-shadow:none}
+
+/* ============== PROGRAMS GRID (HOME) ============== */
+.programs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.program{
+  background:var(--ink-2);padding:clamp(28px,3vw,40px);min-height:340px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:24px;position:relative;overflow:hidden;
+  transition:background .3s ease;
+}
+.program:hover{background:#15151A}
+.program__num{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.program__name{
+  font-family:var(--display);font-weight:var(--fw-light);
+  font-size:clamp(34px,3.2vw,52px);letter-spacing:.04em;text-transform:uppercase;line-height:.96;color:var(--paper);
+}
+.program__desc{font-size:14px;color:var(--mute-2);line-height:1.55;max-width:38ch}
+.program__link{
+  display:inline-flex;align-items:center;gap:10px;font-family:var(--label);font-size:11px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--paper);
+  transition:gap .25s ease;
+}
+.program__link:hover{gap:14px}
+.program__link .arrow{display:inline-block;transition:transform .25s}
+.program::before{
+  content:"";position:absolute;right:-40px;bottom:-40px;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(var(--accent-rgb),.2),transparent 65%);opacity:0;transition:opacity .4s;pointer-events:none;
+}
+.program:hover::before{opacity:1}
+@media(max-width:900px){.programs{grid-template-columns:1fr}}
+
+/* ============== PULL QUOTE ============== */
+.pullq{padding:clamp(60px,8vw,120px) 0;background:linear-gradient(180deg,var(--ink-2),var(--ink))}
+.pullq__inner{max-width:1100px;margin:0 auto;padding:0 var(--gutter);text-align:center}
+.pullq__quote{
+  font-family:var(--display);font-weight:var(--fw-light);
+  font-size:clamp(28px,3.4vw,48px);letter-spacing:-0.015em;line-height:1.2;
+  color:var(--paper);text-wrap:balance;
+}
+.pullq__quote .hl{color:var(--accent-glow);text-shadow:0 0 14px rgba(var(--accent-rgb),.4)}
+.pullq__sig{margin-top:32px;font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+
+/* ============== PILLAR CARDS ============== */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.pillar{background:var(--ink-2);padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:18px;min-height:300px}
+.pillar__n{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.pillar__title{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(22px,1.8vw,28px);letter-spacing:-0.01em;color:var(--paper);text-wrap:balance}
+.pillar__body{color:var(--mute-2);font-size:15px;line-height:1.6}
+@media(max-width:900px){.pillars{grid-template-columns:1fr}}
+
+/* ============== TWO-COL LIST ============== */
+.dualist{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.dualist__col{background:var(--ink-2);padding:clamp(28px,3vw,44px)}
+.dualist__col h3{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(22px,1.8vw,28px);margin-bottom:24px;color:var(--paper);letter-spacing:-0.01em}
+.dualist__col h3 em{font-style:normal;color:var(--accent)}
+.dualist__col h3 .neg{color:#D44A55}
+.dualist__col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.dualist__col li{font-size:15px;line-height:1.55;color:var(--mute-2);padding-left:22px;position:relative}
+.dualist__col li::before{content:"—";position:absolute;left:0;color:var(--accent);font-weight:500}
+.dualist__col--neg li::before{content:"×";color:#D44A55}
+@media(max-width:780px){.dualist{grid-template-columns:1fr}}
+
+/* ============== TRIO (Misión / Visión / Propósito) ============== */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.trio__cell{background:var(--ink-2);padding:clamp(28px,3vw,40px);min-height:240px;display:flex;flex-direction:column;gap:14px}
+.trio__cell .l{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.trio__cell .t{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(20px,1.6vw,26px);color:var(--paper);letter-spacing:-0.01em;line-height:1.25}
+@media(max-width:780px){.trio{grid-template-columns:1fr}}
+
+/* ============== CITIES (MADE) ============== */
+.cities{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.city{background:var(--ink-2);padding:28px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start}
+.city__num{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.16em;color:var(--mute);grid-row:span 2}
+.city__name{font-family:var(--display);font-weight:var(--fw-regular);font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:var(--paper)}
+.city__date{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);align-self:start}
+.city__topic{grid-column:2/-1;font-size:13px;color:var(--mute-2);line-height:1.55;margin-top:6px}
+.city--tba{opacity:.55}
+.city--tba .city__date{color:var(--mute)}
+@media(max-width:780px){.cities{grid-template-columns:1fr}}
+
+/* ============== STAGES (4 components) ============== */
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.stage{background:var(--ink-2);padding:clamp(22px,2.4vw,32px);min-height:220px;display:flex;flex-direction:column;gap:14px}
+.stage__n{font-family:var(--display);font-weight:var(--fw-light);font-size:clamp(36px,3.2vw,52px);color:var(--accent);line-height:1;font-feature-settings:"tnum"}
+.stage__title{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(16px,1.2vw,18px);color:var(--paper);letter-spacing:-0.01em;text-transform:uppercase;letter-spacing:.04em}
+.stage__body{font-size:13px;line-height:1.55;color:var(--mute-2)}
+@media(max-width:980px){.stages{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.stages{grid-template-columns:1fr}}
+
+/* ============== MENTORS ============== */
+.mentors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.mentor{background:var(--ink-2);padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:18px;min-height:300px}
+.mentor__role{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.mentor__name{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(26px,2.2vw,36px);letter-spacing:-0.01em;color:var(--paper)}
+.mentor__bio{font-size:14px;line-height:1.6;color:var(--mute-2)}
+@media(max-width:780px){.mentors{grid-template-columns:1fr}}
+
+/* ============== INVESTMENT BLOCK ============== */
+.invest{display:grid;grid-template-columns:1.2fr 1fr;gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.invest__cell{background:var(--ink-2);padding:clamp(28px,3vw,48px)}
+.invest__cell h3{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(22px,2vw,30px);color:var(--paper);margin-bottom:18px;letter-spacing:-0.01em}
+.invest__rows{display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line-dark);padding-top:18px}
+.invest__row{display:flex;justify-content:space-between;gap:16px;font-size:14px;color:var(--mute-2)}
+.invest__row strong{color:var(--paper);font-weight:500;font-family:var(--display);font-variant-numeric:tabular-nums}
+.invest__big{
+  font-family:var(--display);font-weight:var(--fw-light);
+  font-size:clamp(54px,7vw,108px);letter-spacing:-0.02em;line-height:1;color:var(--accent-glow);
+  text-shadow:0 0 18px rgba(var(--accent-rgb),.4);font-variant-numeric:tabular-nums;
+}
+.invest__cap{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-top:14px}
+@media(max-width:780px){.invest{grid-template-columns:1fr}}
+
+/* ============== STEPS ============== */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.step{background:var(--ink-2);padding:clamp(28px,3vw,44px);min-height:280px;display:flex;flex-direction:column;gap:18px}
+.step__n{font-family:var(--display);font-weight:var(--fw-light);font-size:clamp(48px,5vw,80px);color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.step__t{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(20px,1.6vw,26px);letter-spacing:-0.01em;color:var(--paper)}
+.step__b{font-size:14px;line-height:1.55;color:var(--mute-2)}
+@media(max-width:900px){.steps{grid-template-columns:1fr}}
+
+/* ============== FAQ ============== */
+.faq{border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+.faq__item{border-bottom:1px solid var(--line-dark);padding:24px 0;cursor:pointer}
+.faq__item:last-child{border-bottom:0}
+.faq__q{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(18px,1.5vw,22px);letter-spacing:-0.01em;color:var(--paper);transition:color .2s}
+.faq__item:hover .faq__q{color:var(--accent-glow)}
+.faq__icon{flex:0 0 auto;width:18px;height:18px;position:relative}
+.faq__icon::before,.faq__icon::after{content:"";position:absolute;background:currentColor;transition:transform .25s ease}
+.faq__icon::before{left:0;right:0;top:8px;height:1.5px}
+.faq__icon::after{top:0;bottom:0;left:8px;width:1.5px}
+.faq__item.is-open .faq__icon::after{transform:scaleY(0)}
+.faq__a{display:none;padding-top:14px;color:var(--mute-2);font-size:15px;line-height:1.65;max-width:80ch}
+.faq__item.is-open .faq__a{display:block}
+
+/* ============== MANIFIESTO LONG-FORM ============== */
+.manif{display:grid;grid-template-columns:1fr;gap:36px;max-width:880px;margin:0 auto}
+.manif p{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(22px,2.2vw,32px);line-height:1.4;color:var(--paper);letter-spacing:-0.015em;text-wrap:balance;margin:0}
+.manif p .hl{color:var(--accent-glow)}
+.manif__sig{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);text-align:center;margin-top:24px}
+
+/* ============== QUOTES BANK ============== */
+.quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.quote{background:var(--ink-2);padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:14px;min-height:200px;justify-content:space-between}
+.quote__t{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(18px,1.6vw,24px);line-height:1.35;color:var(--paper);letter-spacing:-0.01em}
+.quote__t .hl{color:var(--accent-glow)}
+.quote__c{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:780px){.quotes{grid-template-columns:1fr}}
+
+/* ============== TRUST BAR ============== */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.trust__cell{background:var(--ink-2);padding:24px;display:flex;flex-direction:column;gap:8px}
+.trust__l{font-family:var(--label);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.trust__v{font-family:var(--display);font-weight:var(--fw-regular);font-size:clamp(16px,1.4vw,20px);letter-spacing:-0.005em;color:var(--paper)}
+@media(max-width:900px){.trust{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.trust{grid-template-columns:1fr}}
+
+/* ============== CTA SECTION ============== */
+.cta-block{position:relative;padding:clamp(80px,12vw,160px) 0;text-align:center;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);overflow:hidden;isolation:isolate}
+.cta-block::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(var(--accent-rgb),.2),transparent 70%)}
+.cta-block h2{font-family:var(--display);font-weight:var(--fw-light);font-size:clamp(40px,6vw,96px);letter-spacing:-0.02em;line-height:1;color:var(--paper);max-width:18ch;margin:0 auto;text-wrap:balance}
+.cta-block h2 .hl{color:var(--accent-glow);text-shadow:0 0 18px rgba(var(--accent-rgb),.5)}
+.cta-block p{margin-top:24px;color:var(--mute-2);font-size:16px;max-width:54ch;margin-left:auto;margin-right:auto;line-height:1.6}
+.cta-block__btns{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ============== FOOTER ============== */
+.foot{padding:clamp(60px,8vw,100px) 0 32px;background:var(--ink);border-top:1px solid var(--line-dark)}
+.foot__top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:60px}
+.foot__brand{display:flex;flex-direction:column;gap:18px;max-width:380px}
+.foot__brand h3{font-family:var(--display);font-weight:var(--fw-regular);font-size:24px;letter-spacing:.06em;text-transform:uppercase;color:var(--paper)}
+.foot__brand p{color:var(--mute-2);font-size:14px;line-height:1.6}
+.foot__col h5{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin:0 0 18px}
+.foot__col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.foot__col li a{color:var(--paper);font-size:14px;transition:color .2s}
+.foot__col li a:hover{color:var(--accent-glow)}
+.foot__bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-dark);padding-top:24px;font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:900px){.foot__top{grid-template-columns:1fr 1fr;gap:32px}.foot__brand{grid-column:span 2}.foot__bot{flex-direction:column;gap:14px;text-align:center}}
+@media(max-width:520px){.foot__top{grid-template-columns:1fr}.foot__brand{grid-column:auto}}
+
+/* ============== UTIL: REVEAL ============== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease, transform .9s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav class="nav">
+  <a class="nav__brand" href="#home" data-route="home">
+    <svg class="nav__mark" viewBox="0 0 200 120" aria-hidden="true">
+      <path d="M 8 90 L 192 18 L 175 38 L 30 90 Z" fill="#00D27A"/>
+      <path d="M 95 102 L 165 60 L 158 78 L 110 102 Z" fill="#F5F4F0"/>
+    </svg>
+    <span>LAIAX</span>
+  </a>
+  <div class="nav__links">
+    <a class="nav__link" href="#instituto" data-route="instituto">Instituto</a>
+    <a class="nav__link" href="#made" data-route="made">MADE</a>
+    <a class="nav__link" href="#manifiesto" data-route="manifiesto">Manifiesto</a>
+    <a class="nav__link" href="#aplicar" data-route="aplicar">Aplicar</a>
+  </div>
+  <div class="nav__right">
+    <div class="lang">
+      <button data-lang="es" class="is-active">ES</button>
+      <span>/</span>
+      <button data-lang="en">EN</button>
+    </div>
+    <a class="nav__cta" href="#aplicar" data-route="aplicar">Cohorte 01</a>
+  </div>
+</nav>
+
+<main class="app">
+
+<!-- ============================================================ -->
+<!-- ============== PAGE: HOME ================================== -->
+<!-- ============================================================ -->
+<section class="page is-active" data-page="home">
+
+  <header class="hero hero--tall">
+    <div class="hero__bg" aria-hidden="true">
+      <video class="hero__video" id="heroVideo" muted playsinline loop preload="metadata" autoplay poster="assets/hero-poster.webp">
+        <source src="assets/hero-loop.webm" type="video/webm"/>
+        <source src="assets/hero-loop.mp4" type="video/mp4"/>
+      </video>
+      <div class="hero__mesh"></div>
+    </div>
+    <div class="hero__grid"></div>
+
+    <div class="hero__top">
+      <div class="eyebrow"><strong>Instituto</strong> · LATAM × AI</div>
+      <div class="eyebrow">LAIAX — 2026</div>
+    </div>
+
+    <div class="hero__main hero__main--split">
+      <div class="hero__col hero__col--l">
+        <h1 class="hero__title hero__title--xl">El instituto</h1>
+        <span class="hero__divider" aria-hidden="true"></span>
+        <ul class="hero__meta" aria-label="programas LAIAX">
+          <li><strong>01</strong>&nbsp;<span>MADE — Maestría · 17 ciudades · 17 meses</span></li>
+          <li><strong>02</strong>&nbsp;<span>Cohorte 01 abierta · 2026</span></li>
+          <li><strong>03</strong>&nbsp;<span>Aval CUT Laguna Universidad</span></li>
+        </ul>
+        <p class="hero__lead">
+          Latin American Institute for AI and eXponential Organizations. La plataforma de aceleración empresarial para la era exponencial: contenido en tiempo real, mentores en activo y tutores de IA por materia.
+        </p>
+      </div>
+      <div class="hero__col hero__col--r">
+        <h2 class="hero__title hero__title--lg">
+          <span class="line"><span class="soft">del</span></span>
+          <span class="line"><span class="accent-glow">presente.</span></span>
+        </h2>
+        <div class="hero__cta">
+          <a href="#made" data-route="made" class="btn btn--primary">Conocer MADE <span class="arrow">→</span></a>
+          <a href="#manifiesto" data-route="manifiesto" class="btn btn--ghost">Manifiesto</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__foot">
+      <div><strong>17</strong>&nbsp;<span>ciudades</span></div>
+      <div><strong>17</strong>&nbsp;<span>meses</span></div>
+      <div><strong>20K</strong>&nbsp;<span>USD inversión total</span></div>
+      <div>↓ Scroll</div>
+    </div>
+  </header>
+
+  <!-- Programs (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">01 — Programas</div>
+        <div>
+          <h2 class="sec__title">Tres iniciativas. Un solo instituto. Para la <em>era exponencial</em>.</h2>
+          <p class="sec__sub">LAIAX es la sombrilla institucional. MADE es el primer producto. Labs y Fellowship son las siguientes salidas del pipeline.</p>
+        </div>
+      </div>
+      <div class="programs reveal">
+        <a class="program" href="#made" data-route="made">
+          <div>
+            <div class="program__num">01 / Activo</div>
+            <div class="program__name">MADE</div>
+          </div>
+          <p class="program__desc">Maestría en Alta Dirección de Empresas. 17 meses, 17 ciudades. Cohorte 01 abierta. Aval universitario CUT Laguna.</p>
+          <span class="program__link">Ver MADE <span class="arrow">→</span></span>
+        </a>
+        <div class="program">
+          <div>
+            <div class="program__num">02 / Próximamente</div>
+            <div class="program__name">LABS</div>
+          </div>
+          <p class="program__desc">Aceleración empresarial vertical. Operadores AI-first acompañan a empresas medianas en su rediseño exponencial. En desarrollo.</p>
+          <span class="program__link" style="color:var(--mute)">En desarrollo</span>
+        </div>
+        <div class="program">
+          <div>
+            <div class="program__num">03 / Próximamente</div>
+            <div class="program__name">FELLOWSHIP</div>
+          </div>
+          <p class="program__desc">Inmersión para fundadores latinoamericanos en ecosistemas tecnológicos de Estados Unidos. Pipeline de talento LATAM × USA.</p>
+          <span class="program__link" style="color:var(--mute)">En desarrollo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull quote -->
+  <div class="pullq reveal">
+    <div class="pullq__inner">
+      <p class="pullq__quote">"La ventaja competitiva del futuro no es información. <span class="hl">Es velocidad de adaptación.</span>"</p>
+      <div class="pullq__sig">— Tesis central LAIAX</div>
+    </div>
+  </div>
+
+  <!-- Trust strip (paper) -->
+  <section class="sec sec--paper" style="padding-top:0">
+    <div class="wrap">
+      <div class="trust reveal">
+        <div class="trust__cell">
+          <span class="trust__l">Aval universitario</span>
+          <span class="trust__v">CUT Laguna Universidad</span>
+        </div>
+        <div class="trust__cell">
+          <span class="trust__l">Origen institucional</span>
+          <span class="trust__v">Evolución de Fly Mastermind</span>
+        </div>
+        <div class="trust__cell">
+          <span class="trust__l">Modalidad</span>
+          <span class="trust__v">Itinerante + digital + IA</span>
+        </div>
+        <div class="trust__cell">
+          <span class="trust__l">Reconocimiento</span>
+          <span class="trust__v">Título de maestría oficial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-block">
+    <div class="wrap">
+      <h2>El siglo no espera. <br><span class="hl">Empieza por MADE.</span></h2>
+      <p>Cohorte 01 abierta — 2026. Procesos de admisión por entrevista. Plazas limitadas.</p>
+      <div class="cta-block__btns">
+        <a href="#aplicar" data-route="aplicar" class="btn btn--primary">Aplicar a MADE <span class="arrow">→</span></a>
+        <a href="#instituto" data-route="instituto" class="btn btn--ghost">Conocer LAIAX</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- ============== PAGE: INSTITUTO ============================= -->
+<!-- ============================================================ -->
+<section class="page" data-page="instituto">
+
+  <header class="hero">
+    <div class="hero__bg" aria-hidden="true"><div class="hero__mesh"></div></div>
+    <div class="hero__grid"></div>
+
+    <div class="hero__top">
+      <div class="eyebrow"><strong>02</strong> — Instituto</div>
+      <div class="eyebrow">LAIAX · LATAM × AI</div>
+    </div>
+
+    <div class="hero__main hero__main--split">
+      <div class="hero__col hero__col--l">
+        <h1 class="hero__title hero__title--xl">Instituto</h1>
+        <span class="hero__divider"></span>
+        <ul class="hero__meta">
+          <li><strong>01</strong>&nbsp;<span>Plataforma de aceleración empresarial</span></li>
+          <li><strong>02</strong>&nbsp;<span>Era exponencial · Velocidad de adopción</span></li>
+          <li><strong>03</strong>&nbsp;<span>LATAM con sedes en EE.UU.</span></li>
+        </ul>
+        <p class="hero__lead">
+          LAIAX no es una universidad. No es una escuela de negocios. No es una comunidad. Es la infraestructura institucional desde la cual Latinoamérica adopta el futuro a la velocidad correcta.
+        </p>
+      </div>
+      <div class="hero__col hero__col--r">
+        <h2 class="hero__title hero__title--lg">
+          <span class="line"><span class="soft">para la era</span></span>
+          <span class="line"><span class="accent-glow">exponencial.</span></span>
+        </h2>
+        <div class="hero__cta">
+          <a href="#made" data-route="made" class="btn btn--primary">Ver MADE <span class="arrow">→</span></a>
+          <a href="#manifiesto" data-route="manifiesto" class="btn btn--ghost">Manifiesto</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ES / NO ES (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">02.1 — Definición</div>
+        <h2 class="sec__title">LAIAX es <em>infraestructura</em>. No una marca personal, no una academia, no una comunidad más.</h2>
+      </div>
+      <div class="dualist reveal">
+        <div class="dualist__col">
+          <h3>Lo que LAIAX <em>es</em></h3>
+          <ul>
+            <li>Una plataforma de aceleración empresarial para la era exponencial.</li>
+            <li>Un instituto donde el contenido se construye en tiempo real con lo que está pasando ahora.</li>
+            <li>La infraestructura que conecta empresarios latinoamericanos con los ecosistemas donde se construye el futuro.</li>
+            <li>El sistema que evita que tu empresa se vuelva obsoleta.</li>
+          </ul>
+        </div>
+        <div class="dualist__col dualist__col--neg">
+          <h3>Lo que LAIAX <span class="neg">no es</span></h3>
+          <ul>
+            <li>No es una universidad tradicional.</li>
+            <li>No es una escuela de negocios convencional.</li>
+            <li>No es una comunidad de innovación más.</li>
+            <li>No es una marca personal.</li>
+            <li>No enseña IA. No enseña negocios. <strong style="color:var(--paper)">Acelera.</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Misión, Visión, Propósito -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">02.2 — Norte</div>
+        <h2 class="sec__title">Misión, visión, propósito.</h2>
+      </div>
+      <div class="trio reveal">
+        <div class="trio__cell">
+          <span class="l">Misión</span>
+          <p class="t">Acelerar la velocidad a la que los empresarios latinoamericanos entienden, adoptan y ejecutan sobre las tecnologías que están redefiniendo el mundo.</p>
+        </div>
+        <div class="trio__cell">
+          <span class="l">Visión</span>
+          <p class="t">Eliminar la brecha de tiempo entre Latinoamérica y los mercados más avanzados del mundo en adopción tecnológica y toma de decisiones estratégicas.</p>
+        </div>
+        <div class="trio__cell">
+          <span class="l">Propósito</span>
+          <p class="t">Cerrar la brecha de tiempo entre cuando el futuro aparece y cuando Latinoamérica actúa sobre él.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tesis pull -->
+  <div class="pullq reveal">
+    <div class="pullq__inner">
+      <p class="pullq__quote">Latinoamérica no está atrasada por <em>falta de talento</em>. Está atrasada porque adopta el futuro <span class="hl">demasiado tarde</span>.</p>
+      <div class="pullq__sig">— Diagnóstico institucional</div>
+    </div>
+  </div>
+
+  <!-- Provoca / Resultado (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">02.3 — Lo que provoca</div>
+        <h2 class="sec__title">Si LAIAX funciona, Latinoamérica deja de <em>reaccionar</em> al futuro y empieza a construirlo.</h2>
+      </div>
+      <div class="trust reveal">
+        <div class="trust__cell"><span class="trust__l">Provoca</span><span class="trust__v">Urgencia estratégica</span></div>
+        <div class="trust__cell"><span class="trust__l">Provoca</span><span class="trust__v">Decisiones más rápidas</span></div>
+        <div class="trust__cell"><span class="trust__l">Provoca</span><span class="trust__v">Adopción tecnológica real</span></div>
+        <div class="trust__cell"><span class="trust__l">Provoca</span><span class="trust__v">Mentalidad exponencial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap principles -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">02.4 — Principios</div>
+        <h2 class="sec__title">Principios que rigen toda iniciativa LAIAX.</h2>
+      </div>
+      <div class="pillars reveal">
+        <div class="pillar"><span class="pillar__n">P1</span><h3 class="pillar__title">Contenido en tiempo real</h3><p class="pillar__body">No contenido enlatado. Cada experiencia se construye días antes con base en lo que está sucediendo en el mundo. La maestría caduca rápido a propósito.</p></div>
+        <div class="pillar"><span class="pillar__n">P2</span><h3 class="pillar__title">Operadores activos</h3><p class="pillar__body">No académicos profesionales. Empresarios que hoy operan compañías reales y comparten criterio aplicado, no teoría.</p></div>
+        <div class="pillar"><span class="pillar__n">P3</span><h3 class="pillar__title">IA como amplificador</h3><p class="pillar__body">No como contenido. Tutores de IA especializados extienden el criterio de los mentores al día a día del empresario entre experiencias.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <div class="wrap">
+      <h2>Velocidad <span class="hl">institucionalizada.</span></h2>
+      <p>El primer producto del instituto está abierto. Te conviertes en operador del presente, no en alumno del pasado.</p>
+      <div class="cta-block__btns">
+        <a href="#made" data-route="made" class="btn btn--primary">Ver MADE <span class="arrow">→</span></a>
+        <a href="#aplicar" data-route="aplicar" class="btn btn--ghost">Aplicar</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- ============== PAGE: MADE ================================== -->
+<!-- ============================================================ -->
+<section class="page" data-page="made">
+
+  <header class="hero hero--tall">
+    <div class="hero__bg" aria-hidden="true"><div class="hero__mesh"></div></div>
+    <div class="hero__grid"></div>
+
+    <div class="hero__top">
+      <div class="eyebrow"><strong>03</strong> — Programa MADE</div>
+      <div class="eyebrow">Cohorte 01 · 2026 — abierta</div>
+    </div>
+
+    <div class="hero__main hero__main--split">
+      <div class="hero__col hero__col--l">
+        <h1 class="hero__title hero__title--xl">MADE</h1>
+        <span class="hero__divider"></span>
+        <ul class="hero__meta">
+          <li><strong>17</strong>&nbsp;<span>meses · 17 ciudades</span></li>
+          <li><strong>08</strong>&nbsp;<span>experiencias presenciales mín.</span></li>
+          <li><strong>20K</strong>&nbsp;<span>USD inversión total</span></li>
+          <li><strong>↗</strong>&nbsp;<span>Aval CUT Laguna Universidad</span></li>
+        </ul>
+        <p class="hero__lead">
+          Maestría en Alta Dirección de Empresas. La primera maestría diseñada para la era de la IA: mentores en activo, contenido emergente, tutores de IA por materia y un proyecto aplicado al negocio del alumno.
+        </p>
+      </div>
+      <div class="hero__col hero__col--r">
+        <h2 class="hero__title hero__title--lg">
+          <span class="line"><span class="soft">se</span></span>
+          <span class="line"><span class="accent-glow">recorre.</span></span>
+        </h2>
+        <div class="hero__cta">
+          <a href="#aplicar" data-route="aplicar" class="btn btn--primary">Aplicar a MADE <span class="arrow">→</span></a>
+          <a href="#manifiesto" data-route="manifiesto" class="btn btn--ghost">Tesis MADE</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Frase central -->
+  <div class="pullq reveal">
+    <div class="pullq__inner">
+      <p class="pullq__quote">"Aquí no se estudia el mundo: <span class="hl">se recorre.</span>"</p>
+      <div class="pullq__sig">— Frase central MADE</div>
+    </div>
+  </div>
+
+  <!-- 3 Pilares (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">03.1 — Modelo</div>
+        <h2 class="sec__title">Tres pilares que <em>rompen</em> con la educación tradicional.</h2>
+        <p class="sec__sub" style="grid-column:2">MADE no es una adaptación del MBA. Es una ruptura con sus supuestos: profesores, contenido enlatado, currículum cerrado.</p>
+      </div>
+      <div class="pillars reveal">
+        <div class="pillar">
+          <span class="pillar__n">Pilar 01</span>
+          <h3 class="pillar__title">Mentores en activo, no profesores.</h3>
+          <p class="pillar__body">Empresarios que hoy operan compañías reales. No transmiten teoría: transmiten criterio. No enseñan lo que funcionó hace años: comparten lo que está funcionando ahora.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar__n">Pilar 02</span>
+          <h3 class="pillar__title">Experiencias presenciales.</h3>
+          <p class="pillar__body">17 meses, 17 ciudades. El alumno participa en al menos 8 experiencias o vive las 17 en inmersión total. Cada mes una ciudad nueva, perspectivas reales y oportunidades emergentes.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar__n">Pilar 03</span>
+          <h3 class="pillar__title">IA aplicada por materia.</h3>
+          <p class="pillar__body">Tutores de inteligencia artificial especializados acompañan al alumno durante los 17 meses. La IA no es contenido: es sistema de amplificación cognitiva entre experiencias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 componentes -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">03.2 — Estructura</div>
+        <h2 class="sec__title">Cuatro componentes. Un programa <em>vivo</em>.</h2>
+      </div>
+      <div class="stages reveal">
+        <div class="stage">
+          <div class="stage__n">01</div>
+          <div class="stage__title">Experiencias</div>
+          <p class="stage__body">17 sesiones presenciales, una por ciudad. Cena de networking + día completo de sesiones, conferencias y mentorías.</p>
+        </div>
+        <div class="stage">
+          <div class="stage__n">02</div>
+          <div class="stage__title">Sesiones digitales</div>
+          <p class="stage__body">Mínimo 80% del contenido digital completado y evaluaciones aprobadas para acreditar la maestría.</p>
+        </div>
+        <div class="stage">
+          <div class="stage__n">03</div>
+          <div class="stage__title">Tutoría con IA</div>
+          <p class="stage__body">Tutores de inteligencia artificial por materia, disponibles durante todo el programa. Refuerzan, conectan y aplican.</p>
+        </div>
+        <div class="stage">
+          <div class="stage__n">04</div>
+          <div class="stage__title">Proyecto aplicado</div>
+          <p class="stage__body">Proyecto real de crecimiento del negocio del alumno. Se desarrolla durante los 17 meses y se presenta al cierre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario y sedes (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">03.3 — Calendario</div>
+        <h2 class="sec__title">17 ciudades. 17 capítulos. Una <em>misma tesis</em>.</h2>
+        <p class="sec__sub" style="grid-column:2">Los temas no se cierran al inicio. Se construyen días antes de cada experiencia para que el contenido refleje lo que está pasando ahora mismo en el mundo.</p>
+      </div>
+      <div class="cities reveal">
+        <div class="city">
+          <span class="city__num">01</span>
+          <span class="city__name">Atlanta</span>
+          <span class="city__date">Enero</span>
+          <p class="city__topic">Crecimiento con un modelo binacional de negocios.</p>
+        </div>
+        <div class="city">
+          <span class="city__num">02</span>
+          <span class="city__name">Denver</span>
+          <span class="city__date">Febrero</span>
+          <p class="city__topic">Crecimiento en la era de sequía de talento.</p>
+        </div>
+        <div class="city">
+          <span class="city__num">03</span>
+          <span class="city__name">CDMX</span>
+          <span class="city__date">Marzo</span>
+          <p class="city__topic">Marketing en la era de infoxicación, ruido e IA.</p>
+        </div>
+        <div class="city">
+          <span class="city__num">04</span>
+          <span class="city__name">Panamá</span>
+          <span class="city__date">Abril</span>
+          <p class="city__topic">Estrategia financiera e inversiones ante la incertidumbre.</p>
+        </div>
+        <div class="city">
+          <span class="city__num">05</span>
+          <span class="city__name">Los Ángeles</span>
+          <span class="city__date">Mayo</span>
+          <p class="city__topic">Marketing en la era de infoxicación, ruido e IA.</p>
+        </div>
+        <div class="city">
+          <span class="city__num">06</span>
+          <span class="city__name">Miami</span>
+          <span class="city__date">Junio</span>
+          <p class="city__topic">Estrategia financiera e inversiones ante la incertidumbre.</p>
+        </div>
+        <div class="city city--tba"><span class="city__num">07</span><span class="city__name">Por anunciar</span><span class="city__date">Julio</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+        <div class="city city--tba"><span class="city__num">08</span><span class="city__name">Por anunciar</span><span class="city__date">Agosto</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+        <div class="city city--tba"><span class="city__num">09</span><span class="city__name">Por anunciar</span><span class="city__date">Septiembre</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+        <div class="city city--tba"><span class="city__num">10</span><span class="city__name">Por anunciar</span><span class="city__date">Octubre</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+        <div class="city city--tba"><span class="city__num">11</span><span class="city__name">Por anunciar</span><span class="city__date">Noviembre</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+        <div class="city city--tba"><span class="city__num">12</span><span class="city__name">Por anunciar</span><span class="city__date">Diciembre</span><p class="city__topic">Tema construido en función de la coyuntura del momento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mentores -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">03.4 — Mentores</div>
+        <h2 class="sec__title">Mentores que <em>operan</em>. No profesores que enseñan.</h2>
+        <p class="sec__sub" style="grid-column:2">Cada experiencia incorpora speakers especialistas en el tema de esa sede. La selección se hace por relevancia y vigencia, no por trayectoria académica.</p>
+      </div>
+      <div class="mentors reveal">
+        <div class="mentor">
+          <span class="mentor__role">Speaker · Inversiones &amp; Capital</span>
+          <h3 class="mentor__name">César Vega</h3>
+          <p class="mentor__bio">Economista y analista especializado en inversiones. Su trabajo redefine la relación de personas y empresas con el dinero, pasando de una lógica reactiva a una mentalidad estratégica de largo plazo. Ayuda a empresarios e inversionistas a tomar mejores decisiones de asignación de capital, riesgo y patrimonio.</p>
+        </div>
+        <div class="mentor">
+          <span class="mentor__role">Speaker · Energía &amp; Asignación de capital</span>
+          <h3 class="mentor__name">Rodolfo Lau Siemers</h3>
+          <p class="mentor__bio">Empresario consolidado en el sector energético, con experiencia en desarrollo, operación y estructuración de proyectos de gran escala. En MADE habla de cómo evalúa oportunidades de inversión, gestiona riesgo y liquidez, y piensa la asignación de capital desde la perspectiva de un operador real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inversión -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">03.5 — Inversión</div>
+        <h2 class="sec__title">Transparente. Septimestral. <em>Acreditable</em>.</h2>
+      </div>
+      <div class="invest reveal">
+        <div class="invest__cell">
+          <h3>Inversión académica</h3>
+          <div class="invest__rows">
+            <div class="invest__row"><span>Cuota septimestral</span><strong>10,000 USD</strong></div>
+            <div class="invest__row"><span>Inversión total</span><strong>20,000 USD</strong></div>
+            <div class="invest__row"><span>Duración total</span><strong>17 meses</strong></div>
+            <div class="invest__row"><span>Mínimo de experiencias</span><strong>8 / 17</strong></div>
+            <div class="invest__row"><span>Sesiones digitales</span><strong>≥ 80%</strong></div>
+            <div class="invest__row"><span>Aval universitario</span><strong>CUT Laguna</strong></div>
+          </div>
+        </div>
+        <div class="invest__cell" style="display:flex;flex-direction:column;justify-content:center">
+          <div class="invest__big">20K</div>
+          <div class="invest__cap">USD · Inversión total · 17 meses</div>
+          <p style="margin-top:24px;color:var(--mute-2);font-size:14px;line-height:1.6;max-width:32ch">Procesos de admisión por entrevista. Plazas limitadas a 30 empresarios por cohorte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <div class="wrap">
+      <h2>Cohorte 01 <span class="hl">abierta.</span></h2>
+      <p>Forma operadores del presente. No alumnos del pasado.</p>
+      <div class="cta-block__btns">
+        <a href="#aplicar" data-route="aplicar" class="btn btn--primary">Iniciar postulación <span class="arrow">→</span></a>
+        <a href="#manifiesto" data-route="manifiesto" class="btn btn--ghost">Leer manifiesto</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- ============== PAGE: MANIFIESTO ============================ -->
+<!-- ============================================================ -->
+<section class="page" data-page="manifiesto">
+
+  <header class="hero">
+    <div class="hero__bg" aria-hidden="true"><div class="hero__mesh"></div></div>
+    <div class="hero__grid"></div>
+
+    <div class="hero__top">
+      <div class="eyebrow"><strong>04</strong> — Manifiesto</div>
+      <div class="eyebrow">Tesis institucional</div>
+    </div>
+
+    <div class="hero__main hero__main--center">
+      <h1 class="hero__title hero__title--md" style="text-align:center">
+        <span style="display:block">Latinoamérica no está</span>
+        <span style="display:block" class="accent-glow">condenada a llegar tarde.</span>
+      </h1>
+      <p class="hero__lead" style="text-align:center;margin:24px auto 0;max-width:64ch">Pero hoy llega tarde. No por falta de talento. No por falta de oportunidades. Sino por velocidad.</p>
+    </div>
+  </header>
+
+  <!-- Manifiesto largo -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="manif reveal">
+        <p>Mientras otros mercados <span class="hl">experimentan</span>, aquí analizamos.</p>
+        <p>Mientras otros <span class="hl">ejecutan</span>, aquí dudamos.</p>
+        <p>Mientras otros construyen el futuro, <span class="hl">aquí lo observamos</span>.</p>
+        <p style="margin-top:48px">LAIAX existe para romper eso.</p>
+        <p>Para acelerar decisiones.</p>
+        <p>Para acercar el futuro.</p>
+        <p>Para formar empresarios que <span class="hl">no reaccionan</span>, sino que lideran.</p>
+        <p style="margin-top:48px">Porque en la era exponencial, el problema no es no saber.</p>
+        <p style="font-weight:var(--fw-light);font-size:clamp(28px,3vw,42px);color:var(--accent-glow);text-shadow:0 0 16px rgba(var(--accent-rgb),.5)">Es llegar tarde.</p>
+        <div class="manif__sig">— Manifiesto LAIAX</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frases clave -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">04.1 — Frases institucionales</div>
+        <h2 class="sec__title">Lo que decimos. Y por qué lo decimos así.</h2>
+      </div>
+      <div class="quotes reveal">
+        <div class="quote">
+          <p class="quote__t">"Aquí no se estudia el mundo: <span class="hl">se recorre.</span>"</p>
+          <span class="quote__c">Frase central · MADE</span>
+        </div>
+        <div class="quote">
+          <p class="quote__t">"La ventaja competitiva del futuro no es información. <span class="hl">Es velocidad de adaptación.</span>"</p>
+          <span class="quote__c">Tesis central · LAIAX</span>
+        </div>
+        <div class="quote">
+          <p class="quote__t">"Mentores que <span class="hl">operan</span>. No profesores que enseñan."</p>
+          <span class="quote__c">Modelo pedagógico</span>
+        </div>
+        <div class="quote">
+          <p class="quote__t">"El sistema que evita que tu empresa se vuelva <span class="hl">obsoleta.</span>"</p>
+          <span class="quote__c">Posicionamiento de producto</span>
+        </div>
+        <div class="quote">
+          <p class="quote__t">"Forma <span class="hl">operadores del presente</span>, no alumnos del pasado."</p>
+          <span class="quote__c">Norte estratégico</span>
+        </div>
+        <div class="quote">
+          <p class="quote__t">"En la era exponencial, el problema no es no saber. <span class="hl">Es llegar tarde.</span>"</p>
+          <span class="quote__c">Cierre de manifiesto</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contra qué existe -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">04.2 — Contra qué existe</div>
+        <h2 class="sec__title">LAIAX existe en oposición a una <em>realidad estructural</em>.</h2>
+      </div>
+      <div class="trust reveal">
+        <div class="trust__cell"><span class="trust__l">Contra</span><span class="trust__v">Lentitud estructural de la región</span></div>
+        <div class="trust__cell"><span class="trust__l">Contra</span><span class="trust__v">Falsa sensación de estabilidad</span></div>
+        <div class="trust__cell"><span class="trust__l">Contra</span><span class="trust__v">Pensamiento lineal en mundo exponencial</span></div>
+        <div class="trust__cell"><span class="trust__l">Contra</span><span class="trust__v">Inercia empresarial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <div class="wrap">
+      <h2>El siglo no espera. <span class="hl">¿Y tú?</span></h2>
+      <p>Si la tesis te resuena, el siguiente paso es entender el primer producto del instituto.</p>
+      <div class="cta-block__btns">
+        <a href="#made" data-route="made" class="btn btn--primary">Conocer MADE <span class="arrow">→</span></a>
+        <a href="#aplicar" data-route="aplicar" class="btn btn--ghost">Aplicar</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- ============== PAGE: APLICAR =============================== -->
+<!-- ============================================================ -->
+<section class="page" data-page="aplicar" data-surface="paper">
+
+  <header class="hero hero--paper">
+    <div class="hero__bg" aria-hidden="true"><div class="hero__mesh"></div></div>
+    <div class="hero__grid"></div>
+
+    <div class="hero__top">
+      <div class="eyebrow"><strong>05</strong> — Admisión</div>
+      <div class="eyebrow">Cohorte 01 · 2026 — abierta</div>
+    </div>
+
+    <div class="hero__main hero__main--split">
+      <div class="hero__col hero__col--l">
+        <h1 class="hero__title hero__title--xl">Aplicar</h1>
+        <span class="hero__divider"></span>
+        <ul class="hero__meta">
+          <li><strong>30</strong>&nbsp;<span>plazas por cohorte</span></li>
+          <li><strong>03</strong>&nbsp;<span>pasos · admisión por entrevista</span></li>
+          <li><strong>20K</strong>&nbsp;<span>USD · inversión total</span></li>
+        </ul>
+        <p class="hero__lead">El acceso a MADE es selectivo y por entrevista. La admisión se confirma después de vivir una experiencia muestra y definir el proyecto estratégico que se trabajará durante los 17 meses.</p>
+      </div>
+      <div class="hero__col hero__col--r">
+        <h2 class="hero__title hero__title--lg">
+          <span class="line"><span class="soft">a</span></span>
+          <span class="line"><span class="accent-glow">MADE.</span></span>
+        </h2>
+        <div class="hero__cta">
+          <a href="mailto:hola@laiax.org?subject=Postulación%20MADE%20Cohorte%2001" class="btn btn--primary">Iniciar postulación <span class="arrow">→</span></a>
+          <a href="mailto:hola@laiax.org?subject=Admisiones%20MADE" class="btn btn--ghost">Hablar con admisiones</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3 pasos (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">05.1 — Proceso</div>
+        <h2 class="sec__title">Tres pasos. <em>Sin trampas.</em></h2>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="step__n">01</div>
+          <div class="step__t">Experiencia muestra</div>
+          <p class="step__b">Participa en una experiencia muestra en cualquier sede convocada por Fly Mastermind. Conoce el formato antes de comprometerte con el programa completo.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">02</div>
+          <div class="step__t">Participación presencial</div>
+          <p class="step__b">Define la asistencia a las sedes del periodo en curso de acuerdo con tu disponibilidad. Mínimo 8 de 17 experiencias presenciales para acreditar.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">03</div>
+          <div class="step__t">Proyecto estratégico</div>
+          <p class="step__b">Define un proyecto real de crecimiento que será desarrollado y acompañado durante toda la duración de la maestría — desde mes uno hasta el cierre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inversión -->
+  <section class="sec sec--ink">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">05.2 — Inversión</div>
+        <h2 class="sec__title">Inversión <em>transparente</em>.</h2>
+      </div>
+      <div class="invest reveal">
+        <div class="invest__cell">
+          <h3>Cuotas y duración</h3>
+          <div class="invest__rows">
+            <div class="invest__row"><span>Inscripción septimestral</span><strong>10,000 USD</strong></div>
+            <div class="invest__row"><span>Inversión total</span><strong>20,000 USD</strong></div>
+            <div class="invest__row"><span>Duración del programa</span><strong>17 meses</strong></div>
+            <div class="invest__row"><span>Mínimo presenciales</span><strong>8 / 17</strong></div>
+            <div class="invest__row"><span>Plazas por cohorte</span><strong>30</strong></div>
+            <div class="invest__row"><span>Idioma</span><strong>Español</strong></div>
+          </div>
+        </div>
+        <div class="invest__cell" style="display:flex;flex-direction:column;justify-content:center">
+          <div class="invest__big">10K</div>
+          <div class="invest__cap">USD · Cuota septimestral</div>
+          <p style="margin-top:24px;color:var(--mute-2);font-size:14px;line-height:1.6;max-width:32ch">El septimestre es el periodo de pago de la maestría. Se distribuyen dos cuotas a lo largo de los 17 meses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (paper) -->
+  <section class="sec sec--paper">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <div class="sec__num">05.3 — FAQ</div>
+        <h2 class="sec__title">Preguntas que <em>aparecen seguido</em>.</h2>
+      </div>
+      <div class="faq reveal">
+        <div class="faq__item"><div class="faq__q"><span>¿Quién valida el título de la maestría?</span><span class="faq__icon"></span></div><div class="faq__a">El título tiene reconocimiento oficial a través del aval universitario de CUT Laguna Universidad, que provee la estructura legal y académica que permite emitir el título de maestría con reconocimiento oficial.</div></div>
+        <div class="faq__item"><div class="faq__q"><span>¿Qué pasa si no puedo asistir a las 17 ciudades?</span><span class="faq__icon"></span></div><div class="faq__a">Para acreditar el programa se requiere participar en un mínimo de 8 experiencias presenciales. Quien quiera inmersión total puede asistir a las 17. Para las sesiones que se hagan a distancia, el alumno deberá completar al menos el 80% del contenido digital y aprobar las evaluaciones correspondientes.</div></div>
+        <div class="faq__item"><div class="faq__q"><span>¿Cuál es el origen de LAIAX?</span><span class="faq__icon"></span></div><div class="faq__a">LAIAX nace como evolución institucional del programa Fly Mastermind. Su primer producto es MADE, una maestría con respaldo universitario. Vendrán más iniciativas bajo la sombrilla institucional de LAIAX.</div></div>
+        <div class="faq__item"><div class="faq__q"><span>¿Qué son los tutores de IA y cómo funcionan?</span><span class="faq__icon"></span></div><div class="faq__a">Son tutores de inteligencia artificial especializados por materia que acompañan al alumno durante los 17 meses. Refuerzan lo aprendido en cada experiencia presencial, aplican los frameworks al contexto real de la empresa del alumno y acompañan el desarrollo del proyecto aplicado.</div></div>
+        <div class="faq__item"><div class="faq__q"><span>¿En qué consiste el proyecto aplicado?</span><span class="faq__icon"></span></div><div class="faq__a">Cada alumno desarrolla durante los 17 meses un proyecto real de crecimiento de su propio negocio. No es un entregable académico abstracto: es un proyecto ejecutable, aplicado a la empresa del alumno, acompañado por mentores y tutores de IA durante todo el programa. Su éxito se mide por impacto real en el negocio, no por calidad académica del entregable.</div></div>
+        <div class="faq__item"><div class="faq__q"><span>¿Cómo se confirma una plaza?</span><span class="faq__icon"></span></div><div class="faq__a">El proceso pasa por una experiencia muestra en una sede de Fly Mastermind, definición de proyecto estratégico y entrevista con admisiones. Las plazas son limitadas a 30 empresarios por cohorte.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <div class="wrap">
+      <h2>El primer paso es <span class="hl">una conversación.</span></h2>
+      <p>Escríbenos. Si encajas con la cohorte, te pasamos a la experiencia muestra.</p>
+      <div class="cta-block__btns">
+        <a href="mailto:hola@laiax.org?subject=Postulación%20MADE%20Cohorte%2001" class="btn btn--primary">Escribir a admisiones <span class="arrow">→</span></a>
+        <a href="#instituto" data-route="instituto" class="btn btn--ghost">Volver al instituto</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ============== FOOTER ====================================== -->
+<!-- ============================================================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <h3>LAIAX</h3>
+        <p>Latin American Institute for AI &amp; eXponential Organizations. La plataforma de aceleración empresarial para la era exponencial. Aval CUT Laguna Universidad.</p>
+      </div>
+      <div class="foot__col">
+        <h5>Instituto</h5>
+        <ul>
+          <li><a href="#instituto" data-route="instituto">Sobre LAIAX</a></li>
+          <li><a href="#manifiesto" data-route="manifiesto">Manifiesto</a></li>
+          <li><a href="#manifiesto" data-route="manifiesto">Tesis central</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h5>Programas</h5>
+        <ul>
+          <li><a href="#made" data-route="made">MADE</a></li>
+          <li><a href="#" style="color:var(--mute);pointer-events:none">LABS · próx.</a></li>
+          <li><a href="#" style="color:var(--mute);pointer-events:none">Fellowship · próx.</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="mailto:hola@laiax.org">hola@laiax.org</a></li>
+          <li><a href="#aplicar" data-route="aplicar">Admisiones</a></li>
+          <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bot">
+      <span>© 2026 LAIAX · Todos los derechos reservados</span>
+      <span>Aval universitario · CUT Laguna</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============== ROUTER (hash-based SPA) ============== */
+(function(){
+  const PAGES = ['home','instituto','made','manifiesto','aplicar'];
+  const TITLES = {
+    home: 'LAIAX — Latin American Institute for AI & eXponential Organizations',
+    instituto: 'LAIAX — Instituto · Para la era exponencial',
+    made: 'LAIAX — MADE · Maestría en Alta Dirección',
+    manifiesto: 'LAIAX — Manifiesto · La velocidad es la ventaja',
+    aplicar: 'LAIAX — Aplicar · Cohorte 01 abierta'
+  };
+  const heroVid = document.getElementById('heroVideo');
+
+  const app = document.querySelector('.app');
+  function go(name){
+    if(!PAGES.includes(name)) name = 'home';
+    let activePage = null;
+    document.querySelectorAll('.page').forEach(p=>{
+      const isActive = p.dataset.page === name;
+      p.classList.toggle('is-active', isActive);
+      if(isActive) activePage = p;
+    });
+    document.querySelectorAll('[data-route]').forEach(a=>{
+      a.classList.toggle('is-active', a.dataset.route === name);
+    });
+    document.title = TITLES[name] || TITLES.home;
+    window.scrollTo({top:0, behavior:'instant'});
+    /* Sync surface attribute on body so nav (sibling of .app) can react */
+    const surface = activePage?.dataset.surface || 'dark';
+    document.body.dataset.surface = surface;
+    /* Hero video only plays on home */
+    if(heroVid){
+      if(name === 'home'){ heroVid.play().catch(()=>{}); }
+      else { heroVid.pause(); }
+    }
+    /* Trigger reveal animations for the new active page */
+    requestAnimationFrame(()=>{
+      const active = document.querySelector('.page.is-active');
+      if(!active) return;
+      active.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  }
+
+  function fromHash(){
+    const h = (location.hash || '').replace('#','').trim().toLowerCase();
+    go(h || 'home');
+  }
+
+  /* Intercept clicks on data-route to keep things SPA-y and avoid double work */
+  document.addEventListener('click', e=>{
+    const a = e.target.closest('[data-route]');
+    if(!a) return;
+    const route = a.dataset.route;
+    if(!PAGES.includes(route)) return;
+    e.preventDefault();
+    if('#'+route === location.hash){ go(route); return; }
+    history.pushState({page:route}, '', '#'+route);
+    go(route);
+  });
+
+  window.addEventListener('hashchange', fromHash);
+  window.addEventListener('popstate', fromHash);
+
+  /* Reveal observer (shared across pages) */
+  const observer = ('IntersectionObserver' in window)
+    ? new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.1, rootMargin:'0px 0px -8% 0px'})
+    : { observe(el){ el.classList.add('is-in'); }, unobserve(){} };
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    /* Initial reveal pass for the active page */
+    document.querySelectorAll('.page.is-active .reveal').forEach(el => observer.observe(el));
+    fromHash();
+  });
+
+  /* Pause hero video off-screen (within home) */
+  if(heroVid && 'IntersectionObserver' in window){
+    new IntersectionObserver(([entry])=>{
+      const onHome = document.querySelector('.page.is-active')?.dataset.page === 'home';
+      if(entry.isIntersecting && onHome){ heroVid.play().catch(()=>{}); }
+      else { heroVid.pause(); }
+    }, {threshold:0.05}).observe(heroVid);
+    heroVid.addEventListener('error', ()=>heroVid.classList.add('is-hidden'), {once:true});
+  }
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq__item').forEach(item=>{
+    item.addEventListener('click', ()=>item.classList.toggle('is-open'));
+  });
+
+  /* Lang toggle (placeholder, ES/EN copy hooks can be added later) */
+  document.querySelectorAll('.lang button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

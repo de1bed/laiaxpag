@@ -1,0 +1,36 @@
+# ===== Node / build artifacts =====
+node_modules/
+dist/
+build/
+.next/
+.cache/
+*.tsbuildinfo
+
+# ===== Logs =====
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ===== Env / secrets =====
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# ===== Editor / OS =====
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== Cursor agent terminals (workspace-local) =====
+terminals/
+
+# ===== Misc =====
+*.bak
+*.tmp

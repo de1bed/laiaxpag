@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>LAIAX — Brand Foundations · Print</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Saira:wght@100;200;300;400;500&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0B;
+    --ink-2: #131316;
+    --paper: #F5F4F0;
+    --line: #2A2A2E;
+    --mute: #7A7A82;
+    --accent-green: #00D27A;
+    --accent-lime:  #C6FF3D;
+    --accent-white: #FFFFFF;
+    --display: 'Michroma', 'Saira', system-ui, sans-serif;
+    --display-alt: 'Saira', system-ui, sans-serif;
+    --body: 'Inter Tight', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background: #2A2A2E; color: var(--ink); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+
+  /* === SCREEN: stack pages with margins === */
+  .print-page {
+    margin: 24px auto;
+    background: white;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  .page-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    color: #C8C8CC; text-align: center; margin: 30px 0 10px;
+  }
+
+  /* === PRINT === */
+  @page { size: 1280px 820px; margin: 0; }
+  @media print {
+    html, body { background: white; margin: 0; }
+    .page-label { display: none; }
+    .print-page {
+      margin: 0 !important;
+      box-shadow: none !important;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .print-page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Stub design-canvas: we don't want pan/zoom for print -->
+<script type="text/babel">
+/* Provide stubs so brand.jsx can load without the real DesignCanvas behaviour */
+function DesignCanvas({ children }) { return null; }
+function DCSection({ children }) { return null; }
+function DCArtboard({ children }) { return null; }
+window.DesignCanvas = DesignCanvas;
+window.DCSection = DCSection;
+window.DCArtboard = DCArtboard;
+</script>
+
+<script type="text/babel" src="brand.jsx"></script>
+<script type="text/babel" src="mockups.jsx"></script>
+<script type="text/babel" src="mockups2.jsx"></script>
+
+<script type="text/babel">
+/* The brand.jsx mounts <App/> into #root — but App returns the (stubbed) DesignCanvas
+   which renders nothing, so it's a no-op. We re-render our print layout into #root. */
+
+const PRINT_PAGES = [
+  // Intro
+  { id: 'cover', label: 'Cover', w: 1280, h: 800, comp: 'Cover' },
+  { id: 'vibe', label: 'Vibe / tono', w: 1280, h: 800, comp: 'VibeManifesto' },
+  // Logo
+  { id: 'lockup-dark', label: 'Lockup — fondo oscuro', w: 1280, h: 760, comp: 'LockupHero' },
+  { id: 'lockup-light', label: 'Lockup — fondo claro', w: 1280, h: 760, comp: 'LockupLight' },
+  { id: 'sublogo', label: 'Sub-logo · monograma LX', w: 1280, h: 760, comp: 'SubLogoExplorations' },
+  // Type
+  { id: 'type-primary', label: 'Primaria · Michroma', w: 1280, h: 820, comp: 'TypePrimary' },
+  { id: 'type-primary-alt', label: 'Alternativa · Saira Light', w: 1280, h: 820, comp: 'TypePrimaryAlt' },
+  { id: 'type-secondary', label: 'Secundaria · Inter Tight', w: 1280, h: 820, comp: 'TypeSecondary' },
+  { id: 'type-mono', label: 'Técnica · JetBrains Mono', w: 1280, h: 820, comp: 'TypeMono' },
+  { id: 'type-pairing', label: 'Pareja en acción', w: 1280, h: 820, comp: 'TypePairing' },
+  // Color
+  { id: 'palette-core', label: 'Neutros / territorio', w: 1280, h: 620, comp: 'PaletteCore' },
+  { id: 'palette-accents', label: 'Acento · 4 direcciones', w: 1280, h: 760, comp: 'PaletteAccents' },
+  // Logo system
+  { id: 'logo-suite', label: 'Suite completa de logos', w: 1440, h: 620, comp: 'MK_LogoSuite' },
+  // Print
+  { id: 'business-card', label: 'Tarjetas · 4 variantes', w: 1280, h: 820, comp: 'MK_BusinessCardV2' },
+  { id: 'badge', label: 'Gafete + pulseras NFC', w: 1440, h: 860, comp: 'MK_BadgeV2' },
+  { id: 'letterhead', label: 'Hoja membretada', w: 1100, h: 820, comp: 'MK_Letterhead' },
+  { id: 'invoice', label: 'Factura + diploma', w: 1280, h: 820, comp: 'MK_Invoice' },
+  // Digital
+  { id: 'landing', label: 'Landing page · laiax.org', w: 1440, h: 920, comp: 'MK_LandingV2' },
+  { id: 'email', label: 'Email + loading', w: 1280, h: 860, comp: 'MK_EmailLoadingV2' },
+  // OOH
+  { id: 'banner', label: 'Espectacular + agenda + pluma + pin', w: 1440, h: 820, comp: 'MK_BannerStationery' },
+  // System
+  { id: 'icons', label: 'Iconografía', w: 1280, h: 760, comp: 'MK_Icons' },
+  { id: 'manifesto', label: 'Manifiesto', w: 1280, h: 820, comp: 'MK_Manifesto' },
+  { id: 'made', label: 'MADE · sub-marca', w: 1280, h: 820, comp: 'MK_MADE' },
+];
+
+function PrintDeck() {
+  return (
+    <div>
+      {PRINT_PAGES.map((p, i) => {
+        const Comp = window[p.comp];
+        return (
+          <React.Fragment key={p.id}>
+            <div className="page-label">
+              {String(i + 1).padStart(2, '0')} / {PRINT_PAGES.length} · {p.label}
+            </div>
+            <div className="print-page" style={{ width: p.w, height: p.h }}>
+              {Comp ? <Comp /> : <div style={{padding:40,fontFamily:'monospace'}}>Missing: {p.comp}</div>}
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+/* Wait for fonts + babel scripts to be ready */
+function mount() {
+  const root = document.getElementById('print-root');
+  ReactDOM.createRoot(root).render(<PrintDeck />);
+}
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => setTimeout(() => { mount(); setTimeout(() => window.print(), 800); }, 500));
+} else {
+  setTimeout(() => { mount(); setTimeout(() => window.print(), 800); }, 1200);
+}
+</script>
+</head>
+<body>
+<div id="root" style="display:none"></div>
+<div id="print-root"></div>
+</body>
+</html>
