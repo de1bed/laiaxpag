@@ -1,8 +1,8 @@
 ﻿import { useRef } from "react";
 import { ArrowUpRight, Globe } from "lucide-react";
 
-const HERO_MP4 = "/assets/hero-loop.mp4";
-const HERO_WEBM = "/assets/hero-loop.webm";
+const HERO_MP4 = "/assets/video/hero.mp4";
+const HERO_WEBM = "/assets/video/hero.webm";
 const HERO_POSTER = "/assets/hero-poster.webp";
 
 function animateOpacity(
