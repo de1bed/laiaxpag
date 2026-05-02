@@ -1,0 +1,8 @@
+latam-countries-110m.geojson — derived from Natural Earth ne_110m_admin_0_countries (public domain).
+Filtered to SUBREGION: South America, Central America, Caribbean (includes Mexico).
+https://www.naturalearthdata.com/
+
+latam-inline.js — same FeatureCollection as JSON assigned to window.__LAIAX_LATAM_GEOFC
+(so the hero works when opening index.html as file:// without fetch/CORS).
+Regenerate after editing the GeoJSON:
+  python -c "import json, pathlib as p; r=p.Path('latam-countries-110m.geojson'); d=json.loads(r.read_text(encoding='utf-8')); p.Path('latam-inline.js').write_text('window.__LAIAX_LATAM_GEOFC='+json.dumps(d,separators=(',',':'))+';',encoding='utf-8')"
