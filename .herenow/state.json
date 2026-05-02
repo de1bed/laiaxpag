@@ -1,0 +1,10 @@
+{
+  "publishes": {
+    "marble-island-4pzx": {
+      "siteUrl": "https://marble-island-4pzx.here.now/",
+      "claimToken": "0210261bb91c40181e1149131929a389e5c83ece5dc2ff1a682e7fe4124397b2",
+      "claimUrl": "https://here.now/claim?slug=marble-island-4pzx&token=0210261bb91c40181e1149131929a389e5c83ece5dc2ff1a682e7fe4124397b2",
+      "expiresAt": "2026-05-03T08:40:06.893Z"
+    }
+  }
+}
