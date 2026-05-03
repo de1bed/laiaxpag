@@ -20,6 +20,8 @@ Esta carpeta es el **paso F (Foundation)** del método F.R.A.M.E. para construir
 | `03-LAIAX-PAGE-STRUCTURE.md`     | Copy y motion por sección                              |
 | `04-LAIAX-ASSET-PROMPTS.md`      | Prompts editoriales para GPT Image 2 + Seedance/Kling  |
 | `05-LAIAX-ONESHOT.md`            | Master prompt para Mount + handoff a Claude Code       |
+| `07-LAIAX-POSICIONAMIENTO-NARRATIVA.md` | Tesis, manifiesto, narrativas largas y primer producto (MADE) |
+| `LAIAX_DocumentoMaestro.md`     | Documento maestro de copy (fuente ampliada)            |
 
 ## Referencias documentación
 
