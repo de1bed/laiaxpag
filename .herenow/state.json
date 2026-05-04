@@ -5,6 +5,18 @@
       "claimToken": "0210261bb91c40181e1149131929a389e5c83ece5dc2ff1a682e7fe4124397b2",
       "claimUrl": "https://here.now/claim?slug=marble-island-4pzx&token=0210261bb91c40181e1149131929a389e5c83ece5dc2ff1a682e7fe4124397b2",
       "expiresAt": "2026-05-03T08:40:06.893Z"
+    },
+    "emerald-violet-aaxe": {
+      "siteUrl": "https://emerald-violet-aaxe.here.now/",
+      "claimToken": "7ea2041265ad32fe0a9680d8a6220725893e1e40f3cfa6467f4ad6a2345ffde1",
+      "claimUrl": "https://here.now/claim?slug=emerald-violet-aaxe&token=7ea2041265ad32fe0a9680d8a6220725893e1e40f3cfa6467f4ad6a2345ffde1",
+      "expiresAt": "2026-05-05T11:53:02.868Z"
+    },
+    "flint-mantra-y6tb": {
+      "siteUrl": "https://flint-mantra-y6tb.here.now/",
+      "claimToken": "dc78f8fcc1c4b9d57029db5823b2b4d3045d0d0075868b7a5a416840040f9e2b",
+      "claimUrl": "https://here.now/claim?slug=flint-mantra-y6tb&token=dc78f8fcc1c4b9d57029db5823b2b4d3045d0d0075868b7a5a416840040f9e2b",
+      "expiresAt": "2026-05-05T11:55:09.948Z"
     }
   }
 }
