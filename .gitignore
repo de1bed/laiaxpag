@@ -23,7 +23,10 @@ pnpm-debug.log*
 # ===== Editor / OS =====
 .DS_Store
 Thumbs.db
-.vscode/
+# Cursor/VS Code: ignorar overrides locales; settings.json y extensions.json van al repo
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
