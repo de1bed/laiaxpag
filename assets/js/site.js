@@ -129,6 +129,8 @@
     });
     document.getElementById('js-nav-links')?.classList.remove('is-open');
     document.getElementById('js-menu')?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    document.documentElement.classList.remove('nav-open');
   }
 
   function fromHash(){
@@ -240,6 +242,8 @@
   menuBtn?.addEventListener('click', () => {
     const open = menu.classList.toggle('is-open');
     menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.classList.toggle('nav-open', !!open);
   });
 
   document.addEventListener('DOMContentLoaded', () => {

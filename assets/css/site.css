@@ -472,6 +472,14 @@ h1,h2,h3,h4,h5,h6{
       rgba(0,0,0,.0)  70%,
       rgba(0,0,0,.36) 100%);
 }
+/* Heroes oscuros de página (Instituto, Nosotros, MADE, Manifiesto): capa negra suave para leer el blanco sobre fotos claras */
+.fs--dark .fs__overlay{
+  background:linear-gradient(180deg,
+    rgba(0,0,0,.36) 0%,
+    rgba(0,0,0,.20) 32%,
+    rgba(0,0,0,.18) 55%,
+    rgba(0,0,0,.32) 100%);
+}
 .fs--light{color:var(--ink);background:var(--white)}
 .fs--light .fs__bg{background:linear-gradient(180deg,#FFFFFF 0%, #F7F5F0 60%, #EFEBE3 100%)}
 .fs--light .fs__video{filter:contrast(1.02) saturate(.95)}
@@ -2353,7 +2361,35 @@ h1,h2,h3,h4,h5,h6{
 .invest--tight .invest__big{font-size:clamp(48px,7vw,96px)}
 /* ============== MOBILE: legibilidad, tacto, safe areas ============== */
 @media (max-width:768px){
-  body{font-size:16px}
+  :root{--gutter:clamp(16px,4.5vw,32px);}
+  html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
+  body{font-size:16px;-webkit-text-size-adjust:100%}
+  .fs:not(.fs--landing){
+    padding:calc(var(--nav-h) + var(--sat) + 16px) max(16px, var(--sal)) max(28px, var(--sab)) max(16px, var(--sar));
+  }
+  .fs--short,.page-hero{
+    min-height:72svh;
+    min-height:72vh;
+  }
+  .fs.fs--made-tight{
+    min-height:min(100svh,760px);
+  }
+  .page-hero .fs__title{
+    font-size:clamp(30px,9vw,52px);
+    max-width:100%;
+    line-height:1.06;
+  }
+  .page-hero .fs__sub{font-size:16px;line-height:1.65}
+  .fs__top{padding-top:clamp(26px,5vw,44px)}
+  .fs__sub{font-size:16px;line-height:1.62}
+  .btn{min-height:44px;padding:11px 18px}
+  .btn--lg{min-height:48px;padding:13px 22px}
+  .fs__btns .btn-text{padding:12px 0;min-height:44px;box-sizing:border-box;align-items:center}
+  .made-synthesis__dark-inner{padding:clamp(26px,5vw,44px) clamp(18px,4vw,28px)}
+  .page-cta__photo-band{height:clamp(168px,30vh,320px)}
+  .contact-paths__item{padding:clamp(18px,3vw,24px) clamp(18px,3vw,26px)}
+  .apply-form input,.apply-form select{font-size:16px;padding:14px 14px;min-height:48px}
+  .apply-form textarea{font-size:16px;padding:14px 14px}
   .quote-band{
     padding:clamp(56px,14vw,120px) max(var(--gutter), var(--sal)) max(56px, var(--sab));
   }
@@ -3893,6 +3929,22 @@ button.triptych__cell{
 .contact-other__sla strong{color:var(--ink);font-weight:600}
 @media(max-width:560px){
   .contact-other__item{grid-template-columns:1fr;gap:8px}
+}
+
+/* ============== Móvil estrecho: pulido extra ============== */
+@media(max-width:480px){
+  .fs__title--xl{font-size:clamp(30px,9.2vw,46px)}
+  .manifiesto-hero__jump{flex-direction:column;align-items:stretch;gap:8px}
+  .manifiesto-hero__jump a{text-align:center;padding:12px 14px;font-size:11px}
+  .ed-cover__copy{
+    padding-left:max(18px,var(--sal));
+    padding-right:max(18px,var(--sar));
+  }
+  .origen-ed,
+  .def-grid{
+    padding:clamp(56px,12vw,96px) max(var(--gutter),var(--sal));
+  }
+  .made-p__photo{min-height:min(52vw,280px)}
 }
 
 /* ============== UTIL: REVEAL ============== */
