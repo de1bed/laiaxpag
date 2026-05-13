@@ -51,7 +51,7 @@
 ============================================================ -->
 <section class="page is-active" data-page="home">
 
-  <!-- HOME · Hero (vídeo + fundido a negro + franja de accesos) -->
+  <!-- HOME · Hero (vídeo + fundido a negro + copy principal) -->
   <article class="fs fs--light fs--landing fs--video-hero fs__cover hero-geo" id="js-hero-landing">
     <div class="fs__bg" aria-hidden="true"></div>
     <div class="fs__video-wrap" aria-hidden="true">
@@ -65,29 +65,7 @@
       <div class="fs__eyebrow"><span class="live-dot" aria-hidden="true"></span>LAIAX</div>
       <p class="fs__legal-name fs__legal-name--muted">Plataformas · Latinoamérica · 2026</p>
       <h1 class="fs__title fs__title--xl">Latin American Institute for AI<br>and <span class="accent">eXponential</span> organizations</h1>
-      <p class="fs__sub">LAIAX es una institución educativa y comunidad de negocios que busca acelerar la velocidad de adopción tecnológica y toma de decisiones de los empresarios latinoamericanos.</p>
-    </div>
-
-    <div class="fs__bottom">
-      <div class="hero-geo__quick">
-        <div class="hero-geo__rail-wrap">
-          <span class="hero-geo__rail-hint" aria-hidden="true"></span>
-          <nav class="hero-geo__rail" aria-label="Tres plataformas LAIAX">
-            <a class="hero-geo__rail-cell" href="#made" data-route="made">
-              <span class="hero-geo__rail-primary">Maestrías y programas educativos</span>
-              <span class="hero-geo__rail-secondary">Abrir</span>
-            </a>
-            <button type="button" class="hero-geo__rail-cell js-platform-modal" data-platform="fondeo">
-              <span class="hero-geo__rail-primary">Curaduría y fondeo de startups</span>
-              <span class="hero-geo__rail-secondary">Abrir</span>
-            </button>
-            <button type="button" class="hero-geo__rail-cell js-platform-modal" data-platform="mentoria">
-              <span class="hero-geo__rail-primary">Mentoría y consultoría</span>
-              <span class="hero-geo__rail-secondary">Abrir</span>
-            </button>
-          </nav>
-        </div>
-      </div>
+      <p class="fs__sub">LAIAX es una institución educativa y comunidad de negocios que busca <strong>acelerar la velocidad</strong> de adopción tecnológica y toma de decisiones de los empresarios latinoamericanos.</p>
     </div>
   </article>
 
@@ -100,41 +78,7 @@
     </div>
   </section>
 
-  <!-- Tres plataformas (texto del brief) -->
-  <div class="triptych-wrap">
-    <header class="triptych-wrap__intro reveal">
-      <h2 class="triptych-wrap__intro-title">Operamos desde <span class="accent">tres plataformas</span></h2>
-    </header>
-    <section class="triptych reveal" id="home-paths" aria-label="Tres plataformas LAIAX">
-      <div class="triptych__bg" data-bg="assets/iamages para laiax/LAIAX_reunion_privada_lobby_hotel.png" aria-hidden="true"></div>
-      <div class="triptych__veil" aria-hidden="true"></div>
-      <div class="triptych__grid">
-        <a class="triptych__cell" href="#made" data-route="made">
-          <h3 class="triptych__h triptych__h--wide">Maestrías y programas educativos</h3>
-          <span class="triptych__link">Abrir</span>
-        </a>
-        <button type="button" class="triptych__cell js-platform-modal" data-platform="fondeo">
-          <h3 class="triptych__h triptych__h--wide">Curaduría y fondeo de startups</h3>
-          <span class="triptych__link">Abrir</span>
-        </button>
-        <button type="button" class="triptych__cell js-platform-modal" data-platform="mentoria">
-          <h3 class="triptych__h triptych__h--wide">Mentoría y consultoría</h3>
-          <span class="triptych__link">Abrir</span>
-        </button>
-      </div>
-    </section>
-  </div>
-
-  <!-- Tres frases LAIAX (brief; sin secciones extra) -->
-  <section class="home-laiax-lines info info--cream" id="home-laiax-lines" aria-label="Qué es LAIAX">
-    <div class="home-laiax-lines__inner">
-      <p class="home-laiax-lines__p reveal">LAIAX es una plataforma de aceleración empresarial para la era exponencial.</p>
-      <p class="home-laiax-lines__p reveal">LAIAX es el sistema que evita que tu empresa se vuelva obsoleta.</p>
-      <p class="home-laiax-lines__p reveal">LAIAX busca acelerar la velocidad a la que los empresarios latinoamericanos <strong>entienden, adoptan y ejecutan</strong> sobre las tecnologías que están redefiniendo el mundo.</p>
-    </div>
-  </section>
-
-  <!-- Tesis (brief) -->
+  <!-- Tesis (brief; continúa el bloque de texto) -->
   <section class="quote-band" id="home-tesis" aria-label="Tesis fundacional LAIAX">
     <div class="quote-band__bg has-img" data-bg="assets/iamages para laiax/LAIAX_diploma_flatlay_escritorio.png" aria-hidden="true"></div>
     <div class="quote-band__overlay" aria-hidden="true"></div>
@@ -145,12 +89,42 @@
     </div>
   </section>
 
-  <!-- Cierre mínimo: solo enlaces útiles -->
-  <section class="home-min-cta" aria-label="Continuar en el sitio">
-    <div class="home-min-cta__inner">
-      <a href="#instituto" data-route="instituto" class="btn btn--solid btn--pill">Instituto</a>
-      <a href="#made" data-route="made" class="btn btn--outline btn--pill">MADE</a>
-      <a href="#contacto" data-route="contacto" class="btn btn--outline btn--pill">Contacto</a>
+  <!-- Tres plataformas (mismo estilo de píldora que Instituto / MADE / Contacto) -->
+  <section class="home-platforms" id="home-paths" aria-label="Tres plataformas LAIAX">
+    <div class="home-platforms__inner reveal">
+      <h2 class="home-platforms__title">Operamos desde <span class="accent">tres plataformas</span></h2>
+      <div class="home-platforms__btns">
+        <a href="#made" data-route="made" class="btn btn--accent btn--pill home-platforms__btn">Maestrías y programas educativos</a>
+        <button type="button" class="btn btn--outline btn--pill home-platforms__btn js-platform-modal" data-platform="fondeo">Curaduría y fondeo de startups</button>
+        <button type="button" class="btn btn--outline btn--pill home-platforms__btn js-platform-modal" data-platform="mentoria">Mentoría y consultoría</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tres frases LAIAX -->
+  <section class="home-laiax-lines info info--cream" id="home-laiax-lines" aria-label="Qué es LAIAX">
+    <div class="home-laiax-lines__inner">
+      <p class="home-laiax-lines__p reveal">LAIAX es una <strong>plataforma de aceleración empresarial</strong> para la <strong>era exponencial</strong>.</p>
+      <p class="home-laiax-lines__p reveal">LAIAX es el sistema que <strong>evita que tu empresa se vuelva obsoleta</strong>.</p>
+      <p class="home-laiax-lines__p reveal">LAIAX busca <strong>acelerar la velocidad</strong> a la que los empresarios latinoamericanos <strong>entienden, adoptan y ejecutan</strong> sobre las tecnologías que están redefiniendo el mundo.</p>
+    </div>
+  </section>
+
+  <!-- Imagen + llamada a la acción -->
+  <section class="home-closer" aria-label="Siguiente paso">
+    <div class="home-closer__bg" data-bg="assets/iamages para laiax/LAIAX_dos_personas_conversando_pasillo.png" aria-hidden="true"></div>
+    <div class="home-closer__overlay" aria-hidden="true"></div>
+    <div class="home-closer__inner reveal">
+      <p class="home-closer__hint">Admisión</p>
+      <a href="#contacto-admision" class="home-closer__cta">Platica con admisiones</a>
+    </div>
+  </section>
+
+  <!-- Pie del home: sedes y contacto -->
+  <section class="home-footer-strip" aria-label="Sedes y contacto">
+    <div class="home-footer-strip__inner">
+      <p class="home-footer-strip__cities">Ciudad de México · Bogotá · São Paulo · Miami · Los Ángeles</p>
+      <a class="home-footer-strip__mail" href="mailto:hola@laiax.org?subject=Consulta%20LAIAX">hola@laiax.org</a>
     </div>
   </section>
 

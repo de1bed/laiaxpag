@@ -79,6 +79,7 @@
               el.classList.contains('fs__bg') ||
               el.classList.contains('cta-strip__figure') ||
               el.classList.contains('quote-band__bg') ||
+              el.classList.contains('home-closer__bg') ||
               el.classList.contains('quote-band__split-visual') ||
               el.classList.contains('ed-cover__media') ||
               el.classList.contains('page-cta__photo-band') ||
@@ -88,7 +89,11 @@
                 el.classList.contains('page-cta__photo-band') ? '#e8e8ea'
                 : el.classList.contains('made-synthesis__dark-bg') ? '#121218'
                 : '#060608';
-              el.style.background = `url('${loadUrl}') ${pos} / cover no-repeat ${fb}`;
+              let posOut = pos;
+              if(el.classList.contains('home-closer__bg')){
+                posOut = 'center 16%';
+              }
+              el.style.background = `url('${loadUrl}') ${posOut} / cover no-repeat ${fb}`;
             }else{
               el.style.backgroundImage = `url('${loadUrl}')`;
               el.style.backgroundSize = 'cover';
